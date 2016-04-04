@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="baoHiemApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Quản lý học sinh tham gia BHYT</title>
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/select.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/page-animate.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/login.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/hocsinh.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/home.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div class="page {{ pageClass }}" ng-view></div>
+
+	<script type="text/javascript" src="js/lib/jquery.min.js"></script>
+	<script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/lib/angular.min.js"></script>
+	<script type="text/javascript" src="js/lib/angular-route.min.js"></script>
+	<script type="text/javascript" src="js/lib/angular-animate.min.js"></script>
+	<script type="text/javascript" src="js/lib/md5.js"></script>
+	<script type="text/javascript" src="js/lib/select.min.js"></script>
+	<script type="text/javascript" src="js/lib/ngMask.min.js"></script>
+
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/controller/login.js"></script>
+	<script type="text/javascript" src="js/controller/hocsinh.js"></script>
+	<script type="text/javascript" src="js/controller/home.js"></script>
+	<script type="text/javascript" src="js/controller/duyethocsinh.js"></script>
+
+	<script type="text/javascript" src="js/directive/smart-select.js"></script>
+
+	<script type="text/javascript" src="js/factory/common.js"></script>
+	
+	<script type="text/javascript" src="js/filter/hoc-sinh-filter.js"></script>
+</body>
+</html>

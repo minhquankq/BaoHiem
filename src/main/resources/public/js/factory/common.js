@@ -1,0 +1,94 @@
+angular.module('baoHiemApp')
+.factory('Common', function() {
+	var self = {};
+	self.formatDate = function(str) {
+		var parts = str.split("/");
+
+		if(parts[2].length == 2) {
+			parts[2] = ((+parts[2] <20) ? "20" : "19") + parts[2];
+		}
+		return parts[0] + "/" + parts[1] + "/" + parts[2];
+		
+	};
+	self.layDSCotChoTableHocSinh = function() {
+	   return [
+		    			{
+		    				"name": "soDinhDanh",
+		    				"show": true,
+		    				"label": "Số định danh"
+		    			}, {
+		    				"name": "hoLot",
+		    				"show": true,
+		    				"label": "Họ lót"
+		    			}, {
+		    				"name": "ten",
+		    				"show": true,
+		    				"label": "Tên"
+		    			}, {
+		    				"name": "gioiTinh",
+		    				"show": true,
+		    				"label": "Giới tính",
+		    				format: function(value) {
+		    					return value == 1 ? "Nam" : "Nữ";
+		    				}
+		    			}, {
+		    				"name": "ngaySinh",
+		    				"show": true,
+		    				"label": "Ngày sinh"
+		    			}, {
+		    				"name": "diaChi",
+		    				"show": true,
+		    				"label": "Địa chỉ"
+		    			}, {
+		    				"name": "danToc.ten",
+		    				"show": false,
+		    				"label": "Dân tộc"
+		    			}, {
+		    				"name": "quocTich.ten",
+		    				"show": true,
+		    				"label": "Quốc tịch"
+		    			}, {
+		    				"name": "tinh.ten",
+		    				"show": true,
+		    				"label": "Tỉnh"
+		    			}, {
+		    				"name": "huyen.ten",
+		    				"show": true,
+		    				"label": "Huyện"
+		    			}, {
+		    				"name": "xa.ten",
+		    				"show": true,
+		    				"label": "Xã"
+		    			}, {
+		    				"name": "khaiSinhSo",
+		    				"show": false,
+		    				"label": "Khai sinh số"
+		    			}, {
+		    				"name": "soKhaiSinh",
+		    				"show": false,
+		    				"label": "Số khai sinh"
+		    			}, {
+		    				"name": "noiKCB.ten",
+		    				"show": true,
+		    				"label": "Nơi KCB"
+		    			}, {
+		    				"name": "maPB",
+		    				"show": true,
+		    				"label": "Lớp (Mã PB)"
+		    			}, {
+		    				"name": "maThe",
+		    				"show": false,
+		    				"label": "Mã thẻ"
+		    			}, {
+		    				"name": "suDungTu",
+		    				"show": false,
+		    				"label": "Sử dụng từ"
+		    			}, {
+		    				"name": "suDungDen",
+		    				"show": false,
+		    				"label": "Sử dụng đến"
+		    			}
+		    		];
+	};
+	return self;
+});

@@ -1,0 +1,31 @@
+<div class="duyet-hoc-sinh">
+	<div class="menu-action">
+	<!-- Chua biet co action nao ngoai export :D -->
+	
+	</div>
+	<div class="ds-hoc-sinh">
+		<div class="don-vi-{{donvi.id}}" ng-repeat="(donvi, dsHSTheoDonVi) in dsHocSinh | groupBy: 'donVi'">
+			<div class="thong-tin-don-vi">
+				<!-- Collapse icon --> {{(donvi.name}}
+			</div>
+			<div class="hoc-sinh-theo-don-vi">
+				<div class="table-content table-responsive">
+					<table id="tableHocSinh" class="table table-condensed table-hover table-bordered tablesorter">
+						<thead>
+							<tr>
+								<th><input type="checkbox" ng-model="allHocSinh[donvi.id]"  /></th>
+								<th ng-repeat="col in dsCot" ng-if="col.show" ng-click="order(col.name)"> {{col.label}} </th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="hs in dsHSTheoDonVi | orderBy:predicate:reverse" ng-class="styleHS(hs)">
+								<td><input type="checkbox" ng-model="hs.duocChon" /></td>
+								<td ng-repeat="col in dsCot" ng-if="col.show"> {{ (col.format) && col.format($eval("hs." + col.name)) || $eval("hs." + col.name)}} </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,208 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12 col-md-12 col-lg-6 ds-hs">
+			<div class="menu-danh-sach">
+				<div class="button-control">
+					<div class="filter">
+						<button class="btn dropdown-toggle" data-placeholder="false" ng-click="showFilter=!showFilter" > 
+							Filter <span class="caret"></span>
+						</button>
+					</div>
+					<div class="cap-nhat-lop">
+						<div class="dropdown">
+						  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						    Cap Nhat
+						    <span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu" aria-labelledby="MenuCapNhat">
+						    <li>
+						    	<div class="input-group">
+									<input type="text" ng-model="lopMoi" class="form-control" placeholder="Nhập lớp mới"/>
+									<div class="btn input-group-addon " ng-click="capNhatLop(lopMoi)">OK</div>
+								</div>
+						    </li>
+						    <li role="separator" class="divider"></li>
+						    <li style="margin: 10px;cursor: pointer;" ng-click="guiDuyetHS()">Gui cho co so</li>
+						  </ul>
+						</div>
+					</div>
+				</div>
+				<div class="filter-content" ng-show="showFilter">
+					<div class="row">
+						<div class="col-sm-2 col-md-2 col-lg-2 lop-label">Lop</div>
+						<div class="col-sm-2 col-md-2 col-lg-2">
+							<select class="form-control filter-khoi" ng-model="chonKhoi">
+								<option ng-repeat="(khoi, dsLop) in dsKhoi" value="{{khoi}}">{{khoi}}</option>
+							</select>
+						</div>
+						<div class="col-sm-8 col-md-8 col-lg-8">
+							<div ng-repeat="lop in dsKhoi[chonKhoi]" class="filter-lop {{lopDuocChon == lop && 'lop-active' || ''}}" ng-click="chonLop(lop)">{{lop}}</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="checkbox show-hoc-sinh-da-chon">
+						    <label>
+						      <input type="checkbox" ng-model="showSelected" /> Hiển thị học sinh đã chọn
+						    </label>
+						  </div>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="table-content table-responsive">
+					<table id="tableHocSinh" class="table table-condensed table-hover table-bordered tablesorter">
+						<thead>
+							<tr>
+								<th><input type="checkbox" ng-model="chonTatCa" ng-change="chonTatCaClick(chonTatCa)" /></th>
+								<th ng-repeat="col in dsCot" ng-if="col.show" ng-click="order(col.name)"> {{col.label}} </th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="hs in dsHocSinh | orderBy:predicate:reverse | HocSinhFilter:lopDuocChon:showSelected" ng-click="chonHocSinh(hs)"
+								ng-class="styleHS(hs)">
+								<td><input type="checkbox" ng-model="hs.duocChon" /></td>
+								<td ng-repeat="col in dsCot" ng-if="col.show"> {{ (col.format) && col.format($eval("hs." + col.name)) || $eval("hs." + col.name)}} </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div>
+				
+			</div>
+		</div>
+		<div class="col-sm-12 col-md-12 col-lg-6 form-hs">
+			<div class=" menu-form">
+				<div class="btn btn-success" ng-show="showMode" ng-click="createHS()">Them</div>
+				<div class="btn btn-warning" ng-show="showMode && hocSinh" ng-click="capNhatHS()">Chinh sua</div>
+				<div class="btn btn-success" ng-show="!showMode" ng-click="luu()">Luu</div>
+				<div class="btn btn-danger" ng-show="!showMode" ng-click="huy()">Huy</div>
+			</div>
+			<div >
+				<div class="show" ng-if="showMode && hocSinh">
+					<table class="show-hs-table table">
+						<tr ng-repeat="col in dsCot">
+							<td>{{col.label}}</td>
+							<td>{{ (col.format) && col.format($eval("hocSinh." + col.name)) || $eval("hocSinh." + col.name)}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="edit" ng-if="!showMode">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="sdd" class="col-sm-3 control-label">Số định danh</label>
+							<div class="col-sm-9">
+								<input type="text" ng-value="taoSoDinhDanh(editHS)" class="form-control" id="sdd" ng-model="editHS.soDinhDanh" disabled="disabled" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="hoLot" class="col-sm-3 control-label">Họ lót</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="hoLot" ng-model="editHS.hoLot" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="ten" class="col-sm-3 control-label">Tên</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="ten" ng-model="editHS.ten" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="ten" class="col-sm-3 control-label">Đơn vị</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="tenDV" ng-model="editHS.donVi.ten" disabled="disabled" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="maPB" class="col-sm-3 control-label">Lop (Ma PB)</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="maPB" ng-model="editHS.maPB" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="ngaySinh" class="col-sm-3 control-label">Ngày sinh</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="ngaySinh" ng-model="editHS.ngaySinh" mask='39/19/9999'/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="gioiTinh" class="col-sm-3 control-label">Gioi tinh</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="gioiTinh" ng-model="editHS.gioiTinh" mask="1" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="diaChi" class="col-sm-3 control-label">Dia chi</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="diaChi" ng-model="editHS.diaChi" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="quocTich" class="col-sm-3 control-label">Quoc tich</label>
+							<div class="col-sm-9">
+								<smart-select ng-model="editHS.quocTich" id="quocTich"
+											danh-sach-data="dsQuocTich" 
+											refresh-function="layDSQuocTich"></smart-select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="danToc" class="col-sm-3 control-label">Dan toc</label>
+							<div class="col-sm-9">
+								<smart-select ng-model="editHS.danToc" id="danToc"
+											danh-sach-data="dsDanToc" 
+											refresh-function="layDSDanToc"></smart-select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="tinh" class="col-sm-3 control-label">Tinh</label>
+							<div class="col-sm-9">
+								<smart-select ng-model="editHS.tinh" id="tinh"
+											danh-sach-data="dsTinh" 
+											refresh-function="layDSTinh"></smart-select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="huyen" class="col-sm-3 control-label">Huyen</label>
+							<div class="col-sm-9">
+								<smart-select ng-model="editHS.huyen" id="huyen"
+											danh-sach-data="dsHuyen" 
+											refresh-function="layDSHuyen" is-disabled="editHS.tinh == null"></smart-select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="xa" class="col-sm-3 control-label">Xa</label>
+							<div class="col-sm-9">
+								<smart-select ng-model="editHS.xa" id="xa"
+											danh-sach-data="dsXa" 
+											refresh-function="layDSXa" is-disabled="editHS.huyen == null"></smart-select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="noiKCB" class="col-sm-3 control-label">Noi KCB</label>
+							<div class="col-sm-9">
+								<smart-select ng-model="editHS.noiKCB" id="noiKCB"
+											danh-sach-data="dsNoiKCB" 
+											refresh-function="layDSNoiKCB" is-disabled="editHS.tinh == null"></smart-select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="khaiSinhSo" class="col-sm-3 control-label">Khai sinh so</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="khaiSinhSo" ng-model="editHS.khaiSinhSo" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="soKhaiSinh" class="col-sm-3 control-label">So khai sinh</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="soKhaiSinh" ng-model="editHS.soKhaiSinh" />
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="hoc-sinh-footerholder">
+	<div class="hoc-sinh-footer copyright">© Copyright 2015 Võ Minh Quân</div>
+</div>

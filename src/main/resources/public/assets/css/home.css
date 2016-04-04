@@ -1,0 +1,17 @@
+.home-container {
+	height: 100%;
+	text-align: center;
+}
+
+.home-logo-container , .home-next-page {
+	height: 100%;
+	text-align: center;
+}
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+.home-logo {
+	vertical-align: middle;
+}
